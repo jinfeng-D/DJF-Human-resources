@@ -37,6 +37,14 @@ module.exports = {
       errors: true,
     },
     // before: require('./mock/mock-server.js')
+    // 配置反向代理
+    proxy: {
+      // 当地址里面有api的时候触发代理机制
+      "/api": {
+        target: "http://ihrm-java.itheima.net/",
+        changeOrigin: true,
+      },
+    },
   },
   configureWebpack: {
     // provide the app's title in webpack's name field, so that
