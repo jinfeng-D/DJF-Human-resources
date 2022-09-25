@@ -1,5 +1,4 @@
 // 拦截器在路由跳转的时候 导航守卫
-
 import router from "@/router";
 import store from "@/store"; // 组件中的store实例 和this.$store是一回事
 import nprogress from "nprogress"; //引入进度条
@@ -12,7 +11,7 @@ import "nprogress/nprogress.css"; //引入进度条
 // next(地址) 跳转到该地址
 // 白名单
 const whitelist = ["/login", "/404"];
-router.beforeEach(function (to, from, next) {
+router.beforeEach(async (to, from, next) => {
   nprogress.start(); //开启进度条
   // 如果有token
   if (store.getters.token) {
@@ -22,6 +21,11 @@ router.beforeEach(function (to, from, next) {
       next("/");
     } else {
       // 不是前往登录页 放行
+      // 判断有没有获取过用户的id
+      if (!store.getters.userId) {
+        // 如果没有用户id 表示没有获取过用户的id, 在这里获取一下
+        await store.dispatch("user/getUserInfo");
+      }
       next();
     }
   } else {

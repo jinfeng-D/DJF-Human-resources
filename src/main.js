@@ -27,6 +27,11 @@ import "@/permission"; // permission control
 Vue.use(ElementUI, { locale });
 // 如果想要中文版 element-ui，按如下方式声明
 // Vue.use(ElementUI)
+// 注册所有的指令,循环添加到vue
+import * as directives from "@/directives";
+Object.keys(directives).forEach((key) => {
+  Vue.directive(key, directives[key]); //注册自定义指令
+});
 
 Vue.config.productionTip = false;
 

@@ -14,8 +14,8 @@
     <div class="right-menu">
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
-          <img src="@/assets/common/bigUserHeader.png" class="user-avatar" />
-          <span class="name">管理员</span>
+          <img v-imagerror="defaultImg" :src="staffPhoto" class="user-avatar" />
+          <span class="name">{{ name }}</span>
           <i class="el-icon-caret-bottom" style="color: #fff" />
         </div>
         <el-dropdown-menu slot="dropdown" class="user-dropdown">
@@ -37,21 +37,27 @@
 <script>
 import { mapGetters } from "vuex";
 import Hamburger from "@/components/Hamburger";
-
 export default {
   components: {
     Hamburger,
   },
+  data() {
+    return {
+      defaultImg: require("@/assets/common/head.jpg"),
+    };
+  },
   computed: {
-    ...mapGetters(["sidebar", "avatar"]),
+    ...mapGetters(["sidebar", "avatar", "name", "staffPhoto"]),
   },
   methods: {
     toggleSideBar() {
       this.$store.dispatch("app/toggleSideBar");
     },
     async logout() {
+      // 调用储存在vuex里面的方法,删除token 退出登录 删除用户信息
+      // 都是同步操作 async和await用不用都行
       await this.$store.dispatch("user/logout");
-      this.$router.push(`/login?redirect=${this.$route.fullPath}`);
+      this.$router.push("/login");
     },
   },
 };
@@ -108,13 +114,7 @@ export default {
     &:focus {
       outline: none;
     }
-    .user-avatar {
-      cursor: pointer;
-      width: 30px;
-      height: 30px;
-      border-radius: 15px;
-      vertical-align: middle;
-    }
+
     .name {
       color: #fff;
       vertical-align: middle;
@@ -151,9 +151,10 @@ export default {
 
         .user-avatar {
           cursor: pointer;
-          width: 40px;
-          height: 40px;
-          border-radius: 10px;
+          width: 30px;
+          height: 30px;
+          border-radius: 15px;
+          vertical-align: middle;
         }
 
         .el-icon-caret-bottom {
