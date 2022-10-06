@@ -39,6 +39,18 @@ export const constantRoutes = [
       },
     ],
   },
+  // 批量导入的公共组件
+  {
+    path: "/import",
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: "",
+        component: () => import("@/views/import"),
+      },
+    ],
+  },
   // 404 page must be placed at the end !!!
   { path: "*", redirect: "/404", hidden: true },
 ];

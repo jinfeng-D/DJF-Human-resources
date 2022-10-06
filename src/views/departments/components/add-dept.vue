@@ -1,7 +1,7 @@
 <template>
   <!-- //弹窗，需要使用到element的dialog对话框组件 -->
   <!-- 新增部门的弹层 -->
-  <el-dialog :title="showTitel" :visible="showDialog">
+  <el-dialog :title="showTitel" :visible="showDialog" @close="btnCancel">
     <!-- //visible：控制是否显示 -->
     <!-- 表单组件  el-form   label-width设置label的宽度   -->
     <!-- 匿名插槽 -->
@@ -104,7 +104,6 @@ export default {
           .some((item) => {
             item.name === value;
           });
-        console.log(isRepeat, "编辑");
       } else {
         // 这个是添加部门校验
         isRepeat = depts
@@ -112,7 +111,6 @@ export default {
             item.pid === this.treeNode.id;
           })
           .some((item) => item.name === value);
-        console.log(isRepeat, "新增");
       }
       isRepeat
         ? callback(new Error(`同级部门下已经存在这个${value}部门了`))

@@ -4,12 +4,13 @@ import ElementUI from "element-ui";
 import "element-ui/lib/theme-chalk/index.css";
 import locale from "element-ui/lib/locale/lang/en"; // lang i18n
 import "@/styles/index.scss"; // global css
-
+import components from "@/components";
 import App from "./App";
 import store from "./store";
 import router from "./router";
 import "@/icons"; // icon
 import "@/permission"; // permission control
+import * as filters from "@/filters";
 /**
  * If you don't want to use mock-server
  * you want to use MockJs for mock api
@@ -32,7 +33,10 @@ import * as directives from "@/directives";
 Object.keys(directives).forEach((key) => {
   Vue.directive(key, directives[key]); //注册自定义指令
 });
-
+Vue.use(components);
+Object.keys(filters).forEach((key) => {
+  Vue.filter(key, filters[key]);
+});
 Vue.config.productionTip = false;
 
 new Vue({

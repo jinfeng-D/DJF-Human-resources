@@ -56,11 +56,11 @@ service.interceptors.response.use(
     if (
       error.response &&
       error.response.data &&
-      error.response.data.code === 1002
+      error.response.data.code === 10002
     ) {
       // 如果满足条件,表示后端提醒token已经超时了
-      store.dispatch("user/logout"); //删除token
-      router.push("/login"); //跳到登录页面重新登录
+      store.dispatch("user/logout"); //退出登录
+      router.push("/login"); //跳到登录页
     } else {
       Message.error(error.message); //提示错误信息
     }
