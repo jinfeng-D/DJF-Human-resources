@@ -1,11 +1,17 @@
 // 管理所有的自定义指令
 // 头像图片获取出现异常情况
 export const imagerror = {
+  // created list: []
+  // beforeUpdate updated
   inserted(dom, options) {
-    // 当图片有地址,但是获取到的时候地址无效,触发错误的时候 触发onerror事件
+    //如果src是null，那么就将value（也就是默认值）给src
+    dom.src = dom.src || options.value;
+
     dom.onerror = function () {
-      // 当图片出现异常的时候 把指令的默认图片设置给src
       dom.src = options.value;
     };
+  },
+  componentUpdated(dom, options) {
+    dom.src = dom.src || options.value;
   },
 };

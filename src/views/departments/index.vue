@@ -1,5 +1,5 @@
 <template>
-  <div class="dspartments-comtainer">
+  <div class="dspartments-comtainer" v-loading="loading">
     <div class="app-container">
       <!-- 组织架构头部 -->
       <el-card class="tree-card">
@@ -68,6 +68,7 @@ export default {
       ],
       company: { name: "江苏传智播客教育科技股份有限公司", manager: "负责人" },
       node: null,
+      loading: false,
     };
   },
   // 计算属性
@@ -81,9 +82,11 @@ export default {
     },
     // 树形架构的转换
     async getDepartments() {
+      this.loading = true;
       const result = await getDepartments();
       this.company = { name: result.companyName, manager: "负责人", id: "" };
       this.departs = tranListToTreeData(result.depts, ""); // 需要将其转化成树形结构
+      this.loading = false;
     },
     // 添加部门,子组件传过来的数据
     addDepts(treeNode) {

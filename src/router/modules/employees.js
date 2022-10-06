@@ -16,5 +16,22 @@ export default {
         icon: "people",
       },
     },
+    {
+      path: "detail/:id", // params 传参, 动态路由传参
+      component: () => import("@/views/employees/detail"),
+      hidden: true,
+      mata: {
+        title: "员工详情",
+      },
+    },
+    {
+      path: "print/:id",
+      component: () => import("@/views/employees/print"),
+      hidden: true,
+      mata: {
+        title: "打印",
+        icon: "people",
+      },
+    },
   ],
 };
