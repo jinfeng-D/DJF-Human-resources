@@ -26,7 +26,11 @@
               </span>
               <!-- dropdownmenu是具体的下拉菜单选项，通过具名插槽dropdown来指定 -->
               <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item command="add">添加子部门</el-dropdown-item>
+                <el-dropdown-item
+                  command="add"
+                  :disabled="!checkPermission('POINT-USER-ADD')"
+                  >添加子部门
+                </el-dropdown-item>
                 <el-dropdown-item v-if="!isRoot" command="edit"
                   >编辑部门</el-dropdown-item
                 >

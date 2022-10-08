@@ -1,5 +1,6 @@
 import { removeToken, setToken, getToken, setTimeStamp } from "@/utils/auth";
 import { login, getUserInfo, getUserDetailById } from "@/api/user";
+import { resetRouter } from "@/router";
 const state = {
   token: getToken(), //设置token为共享状态,初始化vuex的时候 就先从缓存中读取
   userInfo: {}, //定义一个空对象
@@ -46,6 +47,9 @@ const actions = {
     context.commit("removeToken");
     // 删除用户资料
     context.commit("removeUserInfo");
+    // 重置路由
+    resetRouter();
+    context.commit("permission/setRoutes", [], { root: true });
   },
 };
 export default {

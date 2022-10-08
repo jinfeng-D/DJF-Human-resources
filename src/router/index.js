@@ -9,6 +9,7 @@ import attendancesRouter from "./modules/attendances";
 import salarysRouter from "./modules/salarys";
 import settingRouter from "./modules/setting";
 import socialRouter from "./modules/social";
+import userRouter from "./modules/user";
 Vue.use(Router);
 
 /* Layout */
@@ -33,7 +34,7 @@ export const constantRoutes = [
     children: [
       {
         path: "dashboard",
-        name: "Dashboard",
+        name: "dashboard",
         component: () => import("@/views/dashboard/index"),
         meta: { title: "首页", icon: "dashboard" },
       },
@@ -51,6 +52,7 @@ export const constantRoutes = [
       },
     ],
   },
+  userRouter,
   // 404 page must be placed at the end !!!
   { path: "*", redirect: "/404", hidden: true },
 ];
@@ -67,9 +69,11 @@ export const asyncRoutes = [
 ];
 const createRouter = () =>
   new Router({
-    // mode: 'history', // require service support
+    mode: "history", // 加上就是history模式, 页面路由请求经过后端, 如果不加就是hash模式, 有#号,不经过后端
+    base: "hr/", //默认的前缀地址
     scrollBehavior: () => ({ y: 0 }),
-    routes: [...constantRoutes, ...asyncRoutes], // 静态路由和动态路由合并
+    routes: [...constantRoutes], // 静态路由和动态路由合并
+    // routes: [...constantRoutes], // 静态路由和动态路由合并
   });
 
 const router = createRouter();
@@ -77,7 +81,7 @@ const router = createRouter();
 // Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
 export function resetRouter() {
   const newRouter = createRouter();
-  router.matcher = newRouter.matcher; // reset router
+  router.matcher = newRouter.matcher; // 重新设置路由的可匹配路径
 }
 
 export default router;

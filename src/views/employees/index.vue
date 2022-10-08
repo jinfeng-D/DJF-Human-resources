@@ -13,7 +13,11 @@
           <el-button size="small" type="danger" @click="exportData"
             >导出</el-button
           >
-          <el-button size="small" type="primary" @click="showDialog = true"
+          <el-button
+            size="small"
+            type="primary"
+            @click="showDialog = true"
+            :disabled="!checkPermission('POINT-USER-ADD')"
             >新增员工</el-button
           >
         </template>
@@ -96,6 +100,7 @@
             <template slot-scope="{ row }">
               <!-- //table-column嵌套其他标签,需要用template,不需要写插槽名，默认插槽 -->
               <el-button
+                :disabled="!checkPermission('POINT-USER-UPDATE')"
                 type="text"
                 size="small"
                 @click="$router.push(`/employees/detail/${row.id}`)"
@@ -105,7 +110,9 @@
               <el-button type="text" size="small">转正</el-button>
               <el-button type="text" size="small">调岗</el-button>
               <el-button type="text" size="small">离职</el-button>
-              <el-button type="text" size="small">角色</el-button>
+              <el-button type="text" size="small" @click="editRole(row.id)">
+                角色
+              </el-button>
               <el-button type="text" size="small" @click="delEmployee(row.id)"
                 >删除</el-button
               >
@@ -136,6 +143,12 @@
         <canvas ref="myCanvas" />
       </el-row>
     </el-dialog>
+    <!-- 角色权限分配层 -->
+    <assign-role
+      ref="assingRole"
+      :show-role-dialog.sync="showRoleDialog"
+      :user-id="userId"
+    />
   </div>
 </template>
 <script>
@@ -144,6 +157,7 @@ import employeeEnum from "@/api/constant/employees.js";
 import AddEmployee from "./components/add-employee.vue";
 import { formatDate } from "@/filters";
 import QrCode from "qrcode";
+import AssignRole from "./assign-role.vue";
 export default {
   // 组件名称
   name: "Employees",
@@ -152,6 +166,7 @@ export default {
   // 局部注册的组件
   components: {
     AddEmployee,
+    AssignRole,
   },
   // 组件状态值
   data() {
@@ -165,6 +180,8 @@ export default {
         total: 0,
       },
       showDialog: false,
+      showRoleDialog: false,
+      userId: null,
     };
   },
   // 计算属性
@@ -268,6 +285,12 @@ export default {
       } else {
         this.$message.warning("用户未上传头像");
       }
+    },
+    // 点击角色 分配权限弹出层
+    async editRole(id) {
+      this.userId = id;
+      await this.$refs.assingRole.getUserDetailById(id);
+      this.showRoleDialog = true;
     },
   },
   // 以下是生命周期钩子   注：没用到的钩子请自行删除

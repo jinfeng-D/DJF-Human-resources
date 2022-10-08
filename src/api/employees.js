@@ -92,3 +92,11 @@ export function updateJob(data) {
     data,
   });
 }
+// 给员工分配角色接口
+export function assignRoles(data) {
+  return request({
+    url: "/sys/user/assignRoles",
+    data,
+    method: "put",
+  });
+}

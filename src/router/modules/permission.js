@@ -3,7 +3,7 @@ import Layout from "@/layout/";
 export default {
   // 路由规则
   path: "/permission",
-  name: "permission", //给模块增加一个name属性,用于后期做权限的时候使用
+  name: "permissions", //给模块增加一个name属性,用于后期做权限的时候使用
   component: Layout,
   children: [
     {
