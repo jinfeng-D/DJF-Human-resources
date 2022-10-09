@@ -7,6 +7,7 @@ export default {
   component: Layout,
   children: [
     {
+      name: "departments", //给模块增加一个name属性,用于后期做权限的时候使用
       // 2级路由的path什么都不用写的时候,代表了它是二级的默认路由
       path: "", //这里什么都不用写表示/departments 不但有布局 layout => 员工主页
       component: () => import("@/views/departments"),

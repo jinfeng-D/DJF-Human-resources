@@ -1,4 +1,7 @@
 export default {
+
+  // $t('route.dashboard')
+
   route: {
     dashboard: 'Dashboard',
     manage: 'manage',
